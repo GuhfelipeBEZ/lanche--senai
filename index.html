@@ -47,7 +47,8 @@
                     </div>
                 </div> <!-- FIM seção img -->
 
-                <div class="col-md-6">
+                <div class="col-md-6" v-if="etapa == 1">
+                    <!--  diretiva p/ renderização condicional  -->
 
                     <!-- TIPO do Pão -->
                     <div class="row mt-2">
@@ -170,21 +171,24 @@
                                 <div class="card-body">
 
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input" value="bovino" v-model="inputHamburguer">
+                                        <input type="radio" class="form-check-input" value="bovino"
+                                            v-model="inputHamburguer">
                                         <label class="form-check-label">
                                             bovino
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input" value="frango" v-model="inputHamburguer">
+                                        <input type="radio" class="form-check-input" value="frango"
+                                            v-model="inputHamburguer">
                                         <label class="form-check-label">
                                             frango
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input" value="vegetal" v-model="inputHamburguer">
+                                        <input type="radio" class="form-check-input" value="vegetal"
+                                            v-model="inputHamburguer">
                                         <label class="form-check-label">
-                                            carne de mintirinha 
+                                            carne de mintirinha
                                         </label>
                                     </div>
 
@@ -209,27 +213,50 @@
                     <!-- Fazer Pedido -->
                     <div class="row mt-2">
                         <!--     button    Fazer pedido    -->
+                        <div class="col d-flex justify-content-end">
+                            <button type="button" class="btn btn-primary" @click="fazerPedido()">
+                                Fazer Pedido
+                            </button>
+                        </div>
                     </div>
                 </div> <!-- Fim col md -->
 
-                <div class="col-md-6">
+                <!-- etapa 2 -->
+                <div class="col-md-6" v-if="etapa == 2">
+                   <!--  diretiva p/ rensderização condicional  -->
                     <div class="row mt-2">
                         <div class="col">
                             <div class="card">
-
                                 <!-- Titulo Informe seus dados -->
-
+                                    <div class="card-header"> Informe seus Dados </div>
                                 <!-- card-body Informe seus dados -->
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label class="form-label"> Nome </label>
+                                            <input type="text" class="form-control" v-model="inputNome">
+                                        </div>
 
+                                        <div class="mb-3">
+                                            <label class="form-label"> Endereço </label>
+                                            <input type="text" class="form-control" v-model="inputEndereco">
+                                        </div> 
+
+                                    </div>
                             </div> <!--  FIM card -->
                         </div> <!-- col -->
                     </div> <!-- row mt 2 -->
 
                     <div class="row mt-2">
                         <div class="col d-flex justify-content-between">
-
                             <!-- Voltar para o Lanche  -->
-
+                            <button type="button" class="btn btn-warning" @click="etapa -=1"> 
+                                voltar para o lanche
+                            </button>
+                            
+                            <button type="button" class="btn btn-success" @click="confirmarPedido()">
+                                Confirmar
+                            </button>
+                            
                         </div>
                     </div>
                 </div> <!-- fim col md 6 -->
@@ -239,17 +266,28 @@
                     <div class="row mt-2">
                         <div class="col">
                             <div class="card">
-
                                 <!--  PEDIDO CONFIRMADO -->
-
+                                <div class="card-header">
+                                    pedido confirmado 
+                                </div>
+                                <div class="card-body">
+                                    <p>aguarde 10 minutos caso nao chegue o pedido 70denovo blzz</p>
+                                    <p>vamos te chamar em breve, caso nao chame ja sabe ne se 70denovo</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- Repetir pedido -->
                     <div class="row mt-2">
                         <div class="col d-flex justify-content-between">
-
                             <!-- button Repetir Pedido -->
+                            <button type="button" class="btn btn-primary" @click="etapa = 1"> 
+                                Repetir o Pedito
+                            </button>
+
+                            <button type="button" class="btn btn-success" @click="novoPedido()">
+                                Novo Pedido
+                            </button>
 
                         </div>
                     </div>
@@ -270,7 +308,11 @@
                 inputTipoPao: '',
                 inputsalada: [],
                 inputMolhos: [],
-                inputHamburguer: '', 
+                inputHamburguer: '',
+                etapa: 1, // v-if // 
+                inputNome:'',
+                inputEndereco:'',
+                novoPedidoAssincrono: '',
             },
             //propiedade computada//
             computed: {
@@ -285,7 +327,7 @@
                         default:
                             return ['Imagens/padrao/pao_superior.png', 'imagens/padrao/pao_inferior.png']
                     }
-                },
+                }, 
 
                 alface() {
                     if (this.inputsalada.includes('alface')) {
@@ -314,7 +356,7 @@
                     return 'imagens/padrao/molho.png'
                 },
                 hamburguer() {
-                    switch(this.inputHamburguer){
+                    switch (this.inputHamburguer) {
                         case 'bovino':
                             return 'imagens/bovino.png'
                         case 'frango':
@@ -324,10 +366,50 @@
                         default:
                             return 'imagens/padrao/hamburguer.png'
                     }
-                    
+
                 },
 
 
+            },
+            methods: {
+                fazerPedido() {
+                    //se pão e carne definidos 
+                    if (this.inputTipoPao && this.inputHamburguer) {
+                        this.etapa = 2 // avança p/ etapa fechar pedido 
+                    }
+
+                    else {
+                        alert('você precisa selecionar no minimo um pão e uma carne')
+                    }
+                },
+                confirmarPedido() {
+                    if(this.inputNome && this.inputEndereco) {
+                        this.etapa = 3
+
+                        this.novoPedidoAssincrono = setTimeout (() => this.novoPedido(), 10000)
+                    }
+
+                    else {
+                        alert('você precisa informar o seu nome e endereço')
+                    }
+                },
+                novoPedido() {
+                    this.etapa = 1
+
+                    this.inputTipoPao = ''
+                    this.inputsalada = []
+                    this.inputMolhos = []
+                    this.inputHamburguer = ''
+                    this.inputNome = ''
+                    this.inputEndereco = ''
+                },
+            },
+            watch: {
+                etapa(novoValor) {
+                    if(novoValor == 1){
+                        clearTimeout(this.novoPedidoAssincrono)
+                    }
+                },
             },
 
 
