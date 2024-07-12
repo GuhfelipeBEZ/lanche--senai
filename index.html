@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Lanche do senai  </title>
+    <title> Lanche do senai </title>
 
     <!-- VUE -->
     <script src="./vue.js"> </script>
@@ -19,7 +19,7 @@
     <nav class="navbar navbar-dark bg-dark">
         <!-- BARRA PARA TITULO  -->
         <div class="container justify-content-center">
-           
+
             <h1 class="navbar-brand mb-0 h1">
                 Monte o seu lanche </h1>
 
@@ -53,7 +53,7 @@
                     <div class="row mt-2">
                         <div class="col">
                             <div class="card">
-                                
+
                                 <div class="card-header">
                                     Tipo do Pão
                                 </div>
@@ -61,22 +61,24 @@
                                 <div class="card-body">
 
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input" value="gergelim" v-model="inputTipoPao">
+                                        <input type="radio" class="form-check-input" value="gergelim"
+                                            v-model="inputTipoPao">
                                         <label class="form-check-label"> Gergelim </label>
-                                        
+
                                     </div>
 
 
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input" value="australiano" v-model="inputTipoPao">
+                                        <input type="radio" class="form-check-input" value="australiano"
+                                            v-model="inputTipoPao">
                                         <label class="form-check-label"> australiano </label>
-                                        
+
                                     </div>
 
 
                                 </div>
 
-                                
+
 
                                 <!--Card Body Tipos de Pães -->
 
@@ -96,15 +98,16 @@
 
                                 <div class="card-body">
                                     <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" value="alface" v-model="inputsalada"> 
-                                        <label class="form-check-label"> 
+                                        <input type="checkbox" class="form-check-input" value="alface"
+                                            v-model="inputsalada">
+                                        <label class="form-check-label">
                                             alface
                                         </label>
                                     </div>
                                 </div>
 
 
-                                
+
 
                                 <!-- Card Body Alface -->
                             </div>
@@ -122,22 +125,25 @@
 
                                 <div class="card-body">
                                     <div class="form-check form-check-inline">
-                                        <input type="checkbox" class="form-check-input" value="ketchup" v-model="inputMolhos"> 
-                                        <label class="form-check-label"> 
+                                        <input type="checkbox" class="form-check-input" value="ketchup"
+                                            v-model="inputMolhos">
+                                        <label class="form-check-label">
                                             ketchup
                                         </label>
-                                    </div> 
+                                    </div>
 
                                     <div class="form-check form-check-inline">
-                                        <input type="checkbox" class="form-check-input" value="mostarda" v-model="inputMolhos"> 
-                                        <label class="form-check-label"> 
+                                        <input type="checkbox" class="form-check-input" value="mostarda"
+                                            v-model="inputMolhos">
+                                        <label class="form-check-label">
                                             mostarda
                                         </label>
                                     </div>
 
                                     <div class="form-check form-check-inline">
-                                        <input type="checkbox" class="form-check-input" value="maionese" v-model="inputMolhos"> 
-                                        <label class="form-check-label"> 
+                                        <input type="checkbox" class="form-check-input" value="maionese"
+                                            v-model="inputMolhos">
+                                        <label class="form-check-label">
                                             maionese
                                         </label>
                                     </div>
@@ -156,6 +162,40 @@
                     <div class="row mt-2">
                         <div class="col">
                             <div class="card">
+
+                                <div class="card-header">
+                                    tipo de Hamburguer
+                                </div>
+
+                                <div class="card-body">
+
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" class="form-check-input" value="bovino" v-model="inputHamburguer">
+                                        <label class="form-check-label">
+                                            bovino
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" class="form-check-input" value="frango" v-model="inputHamburguer">
+                                        <label class="form-check-label">
+                                            frango
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" class="form-check-input" value="vegetal" v-model="inputHamburguer">
+                                        <label class="form-check-label">
+                                            carne de mintirinha 
+                                        </label>
+                                    </div>
+
+
+
+
+
+                                </div>
+
+
+
 
                                 <!-- TITULO - Tipos de Hamburguer -->
 
@@ -222,7 +262,7 @@
     <!-- Inicio instancia VUE -->
     <script>
 
-        const vm = new Vue ({ 
+        const vm = new Vue({
 
             el: '#app',
 
@@ -230,29 +270,64 @@
                 inputTipoPao: '',
                 inputsalada: [],
                 inputMolhos: [],
+                inputHamburguer: '', 
             },
             //propiedade computada//
             computed: {
-                pao () { //array == lista / variedade //
+                pao() { //array == lista / variedade //
                     switch (this.inputTipoPao) {
                         case 'gergelim':
                             return ['imagens/pao_gergelim_superior.png', 'imagens/pao_gergelim_inferior.png']
 
-                            case 'australiano':
+                        case 'australiano':
                             return ['imagens/pao_australiano_superior.png', 'imagens/pao_australiano_inferior.png']
-                           
-                            default: 
+
+                        default:
                             return ['Imagens/padrao/pao_superior.png', 'imagens/padrao/pao_inferior.png']
                     }
                 },
-                
-                alface () {
-                    if(this.inputsalada.includes('alface')) {
+
+                alface() {
+                    if (this.inputsalada.includes('alface')) {
                         return 'imagens/alface.png'
                     }
                     return 'imagens/padrao/alface.png'
                 },
-                
+                ketchup() {
+                    if (this.inputMolhos.includes('ketchup')) {
+                        return 'imagens/ketchup.png'
+                    }
+                    return 'imagens/padrao/molho.png'
+                },
+
+                mostarda() {
+                    if (this.inputMolhos.includes('mostarda')) {
+                        return 'imagens/mostarda.png'
+                    }
+                    return 'imagens/padrao/molho.png'
+                },
+
+                maionese() {
+                    if (this.inputMolhos.includes('maionese')) {
+                        return 'imagens/maionese.png'
+                    }
+                    return 'imagens/padrao/molho.png'
+                },
+                hamburguer() {
+                    switch(this.inputHamburguer){
+                        case 'bovino':
+                            return 'imagens/bovino.png'
+                        case 'frango':
+                            return 'imagens/frango.png'
+                        case 'vegetal':
+                            return 'imagens/soja.png'
+                        default:
+                            return 'imagens/padrao/hamburguer.png'
+                    }
+                    
+                },
+
+
             },
 
 
